@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chukhie Comisión</title>
+    
+    <!-- Cursors-4U Animated Hello Kitty Cursor Stylesheet -->
+    <link rel="stylesheet" href="https://cdn.cursors-4u.net/cursors/animated/hello-kitty-pajama-0cfed751-32.css">
+
+    <style>
+        /* Base Reset & Background */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Forces the custom cursor to stay active even when hovering over links and buttons */
+        a, a:hover, button, .badge, .info-link, .action-icons span, #intro-screen, [onclick] {
+            cursor: inherit !important;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://i.pinimg.com/originals/2c/17/c3/2c17c35051314624349f4fa57794a91f.gif');
+            background-size: 110%; 
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4a1c27; 
+            perspective: 1000px; 
+            overflow: hidden; 
+        }
+
+        /* --- SOLID DARK INTRO SCREEN (NO SPOILERS) --- */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0a0608; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .terminal-window {
+            background: rgba(30, 15, 22, 0.8);
+            border: 1px solid rgba(255, 182, 193, 0.3); 
+            box-shadow: 0 15px 50px rgba(255, 105, 180, 0.15); 
+            width: 90%;
+            max-width: 700px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 182, 193, 0.2);
+            padding: 12px 15px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .mac-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mac-close { background: #ff5f56; }
+        .mac-min { background: #ffbd2e; }
+        .mac-max { background: #27c93f; }
+
+        .terminal-content {
+            padding: 40px 20px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace; 
+        }
+
+        .ascii-art {
+            color: #ff69b4; 
+            font-size: 1.4rem; 
+            line-height: 1.2;
+            white-space: pre; 
+            overflow: hidden;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .continue-text {
+            color: #ffb6c1; 
+            font-size: 1.1rem;
+            font-weight: bold;
+            animation: pulse-text 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-text {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        .hide-intro {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* The Main Frosted Glass Card */
+        .glass-card {
+            background: rgba(255, 240, 245, 0.4); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            animation: border-glow 4s ease-in-out infinite; 
+            width: 90%;
+            max-width: 400px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            transform-style: preserve-3d;
+            z-index: 10; 
+        }
+
+        @keyframes border-glow {
+            0%, 100% {
+                border-color: rgba(255, 255, 255, 0.6);
+                box-shadow: 0 8px 32px 0 rgba(220, 120, 150, 0.3), 0 0 0px rgba(255, 105, 180, 0);
+            }
+            50% {
+                border-color: rgba(255, 105, 180, 0.8);
+                box-shadow: 0 8px 32px 0 rgba(220, 120, 150, 0.3), 
+                            0 0 25px rgba(255, 105, 180, 0.6), 
+                            inset 0 0 15px rgba(255, 105, 180, 0.2);
+            }
+        }
+
+        /* Profile Picture Section */
+        .profile-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 182, 193, 0.9);
+            transform: translateZ(30px); 
+            animation: avatar-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes avatar-glow {
+            0%, 100% {
+                border-color: rgba(255, 182, 193, 0.9);
+                box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+            }
+            50% {
+                border-color: rgba(255, 255, 255, 1);
+                box-shadow: 0 0 30px rgba(255, 105, 180, 0.8);
+            }
+        }
+
+        /* Blinking Cursor & Typing Effect Styling */
+        .username {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            transform: translateZ(20px); 
+            min-height: 30px; 
+            display: inline-block;
+        }
+        
+        .username::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #ff69b4;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Small action buttons under name */
+        .action-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            transform: translateZ(15px);
+        }
+
+        .action-icons span {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        
+        .action-icons span:hover {
+            opacity: 1;
+            color: #ff69b4; 
+            transform: scale(1.2); 
+        }
+
+        .action-icons .music-btn.playing {
+            color: #ff69b4;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-3px); }
+        }
+
+        /* Inner Content Boxes */
+        .info-box {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            transform: translateZ(10px); 
+        }
+
+        .info-box span {
+            color: #7a3b4c;
+            font-size: 0.85rem;
+        }
+
+        /* Styles for clickable link boxes */
+        .info-link {
+            text-decoration: none;
+            color: inherit; 
+            display: block; 
+        }
+
+        .info-link .info-box {
+            transition: all 0.3s ease;
+        }
+
+        .info-link .info-box:hover {
+            background: rgba(255, 255, 255, 0.8); 
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.5); 
+            transform: translateZ(15px) scale(1.02); 
+        }
+
+        /* Bottom Skills/Links Row */
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            transform: translateZ(25px); 
+        }
+
+        .badge {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            transition: 0.3s;
+        }
+
+        .badge:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+        }
+
+        /* Falling Sparkles CSS */
+        .sparkle {
+            position: absolute;
+            top: -10px;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff, 0 0 15px #ffb6c1;
+            animation: fall linear forwards;
+            pointer-events: none; 
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Solid Dark Terminal Intro Screen -->
+    <div id="intro-screen">
+        <div class="terminal-window">
+            <div class="title-bar">
+                <div class="mac-btn mac-close"></div>
+                <div class="mac-btn mac-min"></div>
+                <div class="mac-btn mac-max"></div>
+            </div>
+            <div class="terminal-content">
+                <!-- Cuter ASCII Cat holding a heart! -->
+                <pre class="ascii-art">
+   /\_/\
+  ( ^.^ )
+  (> ♥ <)
+   )   (
+  (")_(")
+                </pre>
+                <div class="continue-text">Press Enter / Click To Continue</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Player -->
+    <audio id="bg-music" src="song.mp3" loop></audio>
+
+    <div class="glass-card">
+        
+        <div class="profile-container">
+            <img src="https://i.pinimg.com/736x/dd/d0/f9/ddd0f9114c955a8a218573ad2733144c.jpg" alt="Profile" class="avatar">
+        </div>
+
+        <h1 class="username"><span id="type-text"></span></h1>
+
+        <div class="action-icons">
+            <span>&lt;&gt;</span>
+            <span>♡</span>
+            <span class="music-btn" onclick="toggleMusic()">♫</span>
+            <span>♡</span>
+        </div>
+
+        <div class="info-box">
+            <p><strong>Commission Status: Open!</strong></p>
+            <p>Discord: rnukhie</p>
+            <span>Drawing • Designing • Emotes</span>
+        </div>
+
+        <a href="https://www.facebook.com/official.chukhiecomision/" target="_blank" class="info-link">
+            <div class="info-box">
+                <p><strong>Commissions / Portfolio</strong></p>
+                <span>Click here for TOS & Rates</span>
+            </div>
+        </a>
+
+        <a href="https://www.facebook.com/media/set/?set=a.122094705729386799&type=3" target="_blank" class="info-link">
+            <div class="info-box">
+                <p><strong>Proof of Legitimacy ✓</strong></p>
+                <span>Client Reviews & Vouches</span>
+            </div>
+        </a>
+
+        <div class="badges">
+            <div class="badge">🐱</div>
+            <div class="badge">🎨</div>
+            <div class="badge">🌸</div>
+            <div class="badge">☕</div>
+            <div class="badge">📷</div>
+            <div class="badge">🐶</div>  
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT FOR ALL EFFECTS -->
+    <script>
+        // --- Intro Screen & Autoplay Music Logic ---
+        const introScreen = document.getElementById('intro-screen');
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.querySelector('.music-btn');
+        let hasEntered = false;
+
+        function enterSite(e) {
+            if (e.type === 'keydown' && e.key !== 'Enter') return;
+
+            if (!hasEntered) {
+                introScreen.classList.add('hide-intro');
+                
+                music.play().catch(e => console.log("Audio play failed:", e));
+                musicBtn.classList.add('playing'); 
+
+                setTimeout(typeWriter, 400);
+
+                hasEntered = true;
+
+                introScreen.removeEventListener('click', enterSite);
+                document.removeEventListener('keydown', enterSite);
+            }
+        }
+
+        introScreen.addEventListener('click', enterSite);
+        document.addEventListener('keydown', enterSite);
+
+        // --- Background Music Toggle Logic ---
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicBtn.classList.add('playing'); 
+            } else {
+                music.pause();
+                musicBtn.classList.remove('playing'); 
+            }
+        }
+
+        // --- Parallax Effect Logic ---
+        const card = document.querySelector('.glass-card');
+        const body = document.querySelector('body');
+
+        document.addEventListener('mousemove', (e) => {
+            if(!hasEntered) return; 
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25; 
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25; 
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+
+            const bgX = (e.pageX / window.innerWidth - 0.5) * 20; 
+            const bgY = (e.pageY / window.innerHeight - 0.5) * 20;
+            body.style.backgroundPosition = `calc(50% + ${bgX}px) calc(50% + ${bgY}px)`;
+        });
+
+        document.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.5s ease';
+            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            body.style.transition = 'background-position 0.5s ease';
+            body.style.backgroundPosition = 'center';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            card.style.transition = 'none';
+            body.style.transition = 'none';
+        });
+
+        // --- Falling Sparkles Logic ---
+        function createSparkle() {
+            if(!hasEntered) return; 
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDuration = Math.random() * 3 + 3 + 's';
+            
+            const size = Math.random() * 3 + 2;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 6000);
+        }
+        setInterval(createSparkle, 200);
+
+        // --- Typing Animation Logic ---
+        const textToType = "Chukhie Comisión";
+        const typeTarget = document.getElementById('type-text');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < textToType.length) {
+                typeTarget.innerHTML += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 120); 
+            }
+        }
+    </script>
+</body>
+</html>
