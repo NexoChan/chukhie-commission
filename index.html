@@ -24,7 +24,7 @@
 
         body {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://i.pinimg.com/originals/2c/17/c3/2c17c35051314624349f4fa57794a91f.gif');
-            background-size: 110%; 
+            background-size: 120%; 
             background-position: center;
             min-height: 100vh;
             display: flex;
@@ -48,13 +48,14 @@
             align-items: center;
             z-index: 100;
             transition: opacity 0.8s ease, visibility 0.8s ease;
+            padding: 20px;
         }
 
         .terminal-window {
             background: rgba(30, 15, 22, 0.8);
             border: 1px solid rgba(255, 182, 193, 0.3); 
             box-shadow: 0 15px 50px rgba(255, 105, 180, 0.15); 
-            width: 90%;
+            width: 100%;
             max-width: 700px;
             border-radius: 16px;
             overflow: hidden;
@@ -82,24 +83,24 @@
         .mac-max { background: #27c93f; }
 
         .terminal-content {
-            padding: 40px 20px;
+            padding: 30px 15px;
             text-align: center;
             font-family: 'Courier New', Courier, monospace; 
         }
 
         .ascii-art {
             color: #ff69b4; 
-            font-size: 1.4rem; 
+            font-size: 1.1rem; 
             line-height: 1.2;
             white-space: pre; 
-            overflow: hidden;
-            margin-bottom: 30px;
+            overflow-x: auto;
+            margin-bottom: 25px;
             opacity: 0.9;
         }
 
         .continue-text {
             color: #ffb6c1; 
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             animation: pulse-text 1.5s infinite alternate;
         }
@@ -124,7 +125,7 @@
             animation: border-glow 4s ease-in-out infinite; 
             width: 90%;
             max-width: 400px;
-            padding: 30px 20px;
+            padding: 25px 15px;
             text-align: center;
             position: relative;
             transform-style: preserve-3d;
@@ -151,8 +152,8 @@
         }
 
         .avatar {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid rgba(255, 182, 193, 0.9);
@@ -173,7 +174,7 @@
 
         /* Blinking Cursor & Typing Effect Styling */
         .username {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 10px;
             letter-spacing: 1px;
@@ -229,17 +230,17 @@
         .info-box {
             background: rgba(255, 255, 255, 0.5);
             border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
             border: 1px solid rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
+            line-height: 1.5;
             transform: translateZ(10px); 
         }
 
         .info-box span {
             color: #7a3b4c;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         /* Styles for clickable link boxes */
@@ -263,15 +264,15 @@
         .badges {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 15px;
             flex-wrap: wrap;
             transform: translateZ(25px); 
         }
 
         .badge {
-            width: 35px;
-            height: 35px;
+            width: 32px;
+            height: 32px;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 8px;
             display: flex;
@@ -307,6 +308,29 @@
                 opacity: 0;
             }
         }
+
+        /* Media Queries for larger screens */
+        @media (min-width: 768px) {
+            .glass-card {
+                padding: 30px 20px;
+                max-width: 400px;
+            }
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+            .username {
+                font-size: 1.5rem;
+            }
+            .info-box {
+                padding: 15px;
+                margin-bottom: 15px;
+                font-size: 0.9rem;
+            }
+            .ascii-art {
+                font-size: 1.4rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -325,6 +349,9 @@
    /\_/\
   ( ^.^ )
   (> ♥ <)
+   )   (
+  (")_(")
+                </pre>
                 <div class="continue-text">Press Enter / Click To Continue</div>
             </div>
         </div>
@@ -357,7 +384,7 @@
         <a href="https://www.facebook.com/official.chukhiecomision/" target="_blank" class="info-link">
             <div class="info-box">
                 <p><strong>Commissions / Portfolio</strong></p>
-                <span>Click here for TOS & Rates</span>
+                <span>^v^</span>
             </div>
         </a>
 
@@ -419,10 +446,11 @@
             }
         }
 
-        // --- Parallax Effect Logic ---
+        // --- Parallax Effect Logic (Supports Mouse & Gyroscope / Tilt) ---
         const card = document.querySelector('.glass-card');
         const body = document.querySelector('body');
 
+        // Desktop Mouse Parallax
         document.addEventListener('mousemove', (e) => {
             if(!hasEntered) return; 
             const xAxis = (window.innerWidth / 2 - e.pageX) / 25; 
@@ -444,6 +472,17 @@
         document.addEventListener('mouseenter', () => {
             card.style.transition = 'none';
             body.style.transition = 'none';
+        });
+
+        // Mobile Gyroscope (Device Orientation) Parallax
+        window.addEventListener('deviceorientation', (e) => {
+            if (!hasEntered) return;
+            // e.gamma is left/right tilt (-90 to 90), e.beta is front/back tilt (-180 to 180)
+            const tiltX = e.gamma ? e.gamma / 2 : 0; 
+            const tiltY = e.beta ? (e.beta - 45) / 2 : 0; // Offset slightly for natural phone viewing angle
+
+            card.style.transform = `rotateY(${tiltX}deg) rotateX(${-tiltY}deg)`;
+            body.style.backgroundPosition = `calc(50% + ${tiltX * 1.5}px) calc(50% + ${tiltY * 1.5}px)`;
         });
 
         // --- Falling Sparkles Logic ---
