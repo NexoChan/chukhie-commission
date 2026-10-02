@@ -21,7 +21,7 @@
         }
 
         /* Forces the custom cursor to stay active even when hovering over links and buttons */
-        a, a:hover, button, .badge, .info-link, .action-icons span, #intro-screen, [onclick] {
+        a, a:hover, button, .badge, .info-link, .action-icons span, #intro-screen, [onclick], .close-modal {
             cursor: inherit !important;
         }
 
@@ -38,7 +38,7 @@
             overflow: hidden; 
         }
 
-        /* --- SOLID DARK INTRO SCREEN (NO SPOILERS) --- */
+        /* --- SOLID DARK INTRO SCREEN --- */
         #intro-screen {
             position: fixed;
             top: 0;
@@ -239,6 +239,10 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             line-height: 1.5;
             transform: translateZ(10px); 
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .info-box span {
@@ -251,17 +255,190 @@
             text-decoration: none;
             color: inherit; 
             display: block; 
-        }
-
-        .info-link .info-box {
             transition: all 0.3s ease;
         }
 
-        .info-link .info-box:hover {
-            background: rgba(255, 255, 255, 0.8); 
-            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.5); 
+        .info-link:hover {
             transform: translateZ(15px) scale(1.02); 
         }
+
+        .info-link:hover .info-box {
+            background: rgba(255, 255, 255, 0.8); 
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.5); 
+        }
+
+        /* --- Grid Layout for Links --- */
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+            transform: translateZ(10px);
+        }
+
+        /* --- PRICING MODAL (POP-UP PAGE) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 15px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(255, 240, 245, 0.98);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 40px rgba(220, 120, 150, 0.4);
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px 20px;
+            text-align: left;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed rgba(255, 182, 193, 0.6);
+            padding-bottom: 10px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.1rem;
+            color: #4a1c27;
+        }
+
+        .close-modal {
+            background: rgba(255, 182, 193, 0.4);
+            border: none;
+            color: #4a1c27;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-modal:hover {
+            background: #ff69b4;
+            color: white;
+        }
+
+        /* Pricing Modal Formatting */
+        .pricing-section-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #7a3b4c;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 182, 193, 0.3);
+            padding-bottom: 4px;
+        }
+
+        .price-card-box {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 182, 193, 0.4);
+        }
+
+        .price-card-box h3 {
+            font-size: 0.9rem;
+            color: #4a1c27;
+            margin-bottom: 6px;
+        }
+
+        .price-card-box ul {
+            list-style: none;
+            padding-left: 5px;
+            font-size: 0.8rem;
+            color: #5c3541;
+            line-height: 1.4;
+        }
+
+        .price-card-box ul li {
+            margin-bottom: 3px;
+        }
+
+        .pkg-rate {
+            display: block;
+            margin-top: 6px;
+            font-weight: bold;
+            color: #d63384;
+            font-size: 0.85rem;
+        }
+
+        /* Detailed Pricelist Table items */
+        .pricelist-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .pricelist-row {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            padding: 8px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 182, 193, 0.2);
+        }
+
+        .pricelist-row span.item-title {
+            color: #4a1c27;
+        }
+
+        .pricelist-row span.item-cost {
+            font-weight: bold;
+            color: #d63384;
+        }
+
+        .modal-footer-note {
+            font-size: 0.75rem;
+            color: #7a3b4c;
+            margin-top: 15px;
+            text-align: center;
+            line-height: 1.4;
+            background: rgba(255, 182, 193, 0.15);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        /* ---------------------------------- */
 
         /* Bottom Skills/Links Row */
         .badges {
@@ -347,12 +524,11 @@
                 <div class="mac-btn mac-max"></div>
             </div>
             <div class="terminal-content">
-                <!-- Cuter ASCII Cat holding a heart! -->
                 <pre class="ascii-art">
    /\_/\
   ( ^.^ )
   (> ♥ <)
-  (")_(")
+  (")_(.”)
                 </pre>
                 <div class="continue-text">Press Enter / Click To Continue</div>
             </div>
@@ -377,23 +553,37 @@
             <span>♡</span>
         </div>
 
-        <div class="info-box">
+        <div class="info-box" style="margin-bottom: 12px;">
             <p><strong>Commission Status: Open!</strong></p>
             <p>Discord: chukhiecomision</p>
             <span>Write-ups • PPTS • Research • Thesis • RRLS • and more</span>
         </div>
 
-        <a href="https://www.facebook.com/official.chukhiecomision/" target="_blank" class="info-link">
-            <div class="info-box">
-                <p><strong>Commission Profile</strong></p>
-                <span>^v^</span>
-            </div>
-        </a>
+        <!-- SIDE-BY-SIDE BUTTONS -->
+        <div class="links-grid">
 
-        <a href="https://www.facebook.com/media/set/?set=a.122094705729386799&type=3" target="_blank" class="info-link">
+            <!-- Pricing Button (Left) -->
+            <div class="info-link" onclick="openPricingModal()">
+                <div class="info-box">
+                    <p><strong>Pricing & Rates 🌸</strong></p>
+                    <span style="margin-top: 3px;">Service packages</span>
+                </div>
+            </div>
+
+            <!-- Proof of Legitimacy Button (Right) -->
+            <a href="https://www.facebook.com/media/set/?set=a.122094705729386799&type=3" target="_blank" class="info-link">
+                <div class="info-box">
+                    <p><strong>Proof of Legitimacy ✓</strong></p>
+                    <span style="margin-top: 3px;">Client reviews</span>
+                </div>
+            </a>
+
+        </div>
+
+        <a href="https://www.facebook.com/official.chukhiecomision/" target="_blank" class="info-link" style="margin-top: 12px;">
             <div class="info-box">
-                <p><strong>Proof of Legitimacy ✓</strong></p>
-                <span>Client Reviews & Vouches</span>
+                <p><strong>Visit Main Commission Profile</strong></p>
+                <span>Facebook Page</span>
             </div>
         </a>
 
@@ -406,6 +596,93 @@
             <div class="badge">🐶</div>  
         </div>
 
+    </div>
+
+    <!-- PRICING POP-UP MODAL PAGE -->
+    <div class="modal-overlay" id="pricing-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🌸 Chukhie Comisión • Acad Help</h2>
+                <button class="close-modal" onclick="closePricingModal()">✕</button>
+            </div>
+            
+            <!-- Full Thesis Packages -->
+            <div class="pricing-section-title">🍥 Full Thesis Packages & Rates (Chapters 1–5)🔖</div>
+            
+            <div class="price-card-box">
+                <h3>🩰 Proposal Package (Chapters 1 – 3)</h3>
+                <ul>
+                    <li>• Title proposal & approval defense pitch</li>
+                    <li>• Chapter 1: Background, SOP, framework & significance</li>
+                    <li>• Chapter 2: RRL / RRS & literature synthesis</li>
+                    <li>• Chapter 3: Research methodology & instruments</li>
+                    <li>• Proposal defense powerpoint & presentation script</li>
+                </ul>
+                <span class="pkg-rate">Rate: ₱1,500 – ₱2,500+ (scope & deadline dependent)</span>
+            </div>
+
+            <div class="price-card-box">
+                <h3>🩰 Final Defense Package (Chapters 4 – 5)</h3>
+                <ul>
+                    <li>• Chapter 4: Data presentation, computation & analysis</li>
+                    <li>• Chapter 5: Summary of findings, conclusions & recommendations</li>
+                    <li>• Final defense powerpoint presentation & cue cards</li>
+                </ul>
+                <span class="pkg-rate">Rate: ₱1,800 – ₱3,000+ (data complexity dependent)</span>
+            </div>
+
+            <div class="price-card-box">
+                <h3>🩰 Full Thesis Bundle (Chapters 1 – 5 Complete)</h3>
+                <ul>
+                    <li>• Complete chapters 1 to 5 from scratch</li>
+                    <li>• Standardized formatting (APA / MLA / Harvard / Template)</li>
+                    <li>• Complete reference list & citation checks</li>
+                    <li>• Both proposal & final defense PPTs + scripts included</li>
+                    <li>• Free minor revisions within scope</li>
+                </ul>
+                <span class="pkg-rate">Rate: Quotation basis / DM for custom package rate</span>
+            </div>
+
+            <!-- Detailed Pricelist & Per-Item Rates -->
+            <div class="pricing-section-title">📋 Research Rates & Pricelist (Starts at ₱150)</div>
+            
+            <div class="pricelist-grid">
+                <div class="pricelist-row"><span class="item-title">Ch 1: Background of the Study</span><span class="item-cost">₱200 / page</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 1: Statement of the Problem (SOP)</span><span class="item-cost">₱150</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 1: Conceptual Framework</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 1: Theoretical Framework</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 1: Scope and Delimitation</span><span class="item-cost">₱150</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 1: Significance of the Study</span><span class="item-cost">₱150</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 1: Definition of Terms</span><span class="item-cost">₱200</span></div>
+
+                <div class="pricelist-row"><span class="item-title">Ch 2: Local Literature/Studies (Write-up)</span><span class="item-cost">₱50</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 2: Foreign Literature/Studies (Write-up)</span><span class="item-cost">₱40</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 2: Local Literature/Studies (Links only)</span><span class="item-cost">₱35</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 2: Foreign Literature/Studies (Links only)</span><span class="item-cost">₱25</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 2: Synthesis of the State-of-the-Art</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 2: Proper Citation (APA / MLA)</span><span class="item-cost">₱15</span></div>
+
+                <div class="pricelist-row"><span class="item-title">Ch 3: Research Design & Sampling</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 3: Locale & Respondents</span><span class="item-cost">₱150</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 3: Data Gathering Procedure</span><span class="item-cost">₱150</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 3: Statistical Treatment / Analysis</span><span class="item-cost">₱200</span></div>
+
+                <div class="pricelist-row"><span class="item-title">Ch 4: Data Presentation & Tabular Analysis</span><span class="item-cost">₱250</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 4: Textual Interpretation</span><span class="item-cost">₱250</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 4: Statistical Computation Write-up</span><span class="item-cost">₱250</span></div>
+
+                <div class="pricelist-row"><span class="item-title">Ch 5: Summary of Findings</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 5: Conclusions & Findings</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Ch 5: Recommendations</span><span class="item-cost">₱200</span></div>
+
+                <div class="pricelist-row"><span class="item-title">Defense: Title Defense Proposal</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Defense: PowerPoint Presentation</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Defense Script</span><span class="item-cost">₱200</span></div>
+                <div class="pricelist-row"><span class="item-title">Whole Paper Formatting</span><span class="item-cost">Quotation</span></div>
+            </div>
+
+            <p class="modal-footer-note">✨ Qualitative & quantitative research (Ch 1–5), custom write-ups, reflections & critique papers accepted. Send your topic, specific instructions, deadline & rubrics via PM for bookings and exact quotes!</p>
+        </div>
     </div>
 
     <!-- JAVASCRIPT FOR ALL EFFECTS -->
@@ -448,6 +725,24 @@
             }
         }
 
+        // --- Pricing Modal Pop-up Logic ---
+        const pricingModal = document.getElementById('pricing-modal');
+
+        function openPricingModal() {
+            pricingModal.classList.add('active');
+        }
+
+        function closePricingModal() {
+            pricingModal.classList.remove('active');
+        }
+
+        // Close modal when clicking outside of the white card box
+        window.addEventListener('click', (e) => {
+            if (e.target === pricingModal) {
+                closePricingModal();
+            }
+        });
+
         // --- Parallax Effect Logic (Supports Mouse & Gyroscope / Tilt) ---
         const card = document.querySelector('.glass-card');
         const body = document.querySelector('body');
@@ -479,9 +774,8 @@
         // Mobile Gyroscope (Device Orientation) Parallax
         window.addEventListener('deviceorientation', (e) => {
             if (!hasEntered) return;
-            // e.gamma is left/right tilt (-90 to 90), e.beta is front/back tilt (-180 to 180)
             const tiltX = e.gamma ? e.gamma / 2 : 0; 
-            const tiltY = e.beta ? (e.beta - 45) / 2 : 0; // Offset slightly for natural phone viewing angle
+            const tiltY = e.beta ? (e.beta - 45) / 2 : 0; 
 
             card.style.transform = `rotateY(${tiltX}deg) rotateX(${-tiltY}deg)`;
             body.style.backgroundPosition = `calc(50% + ${tiltX * 1.5}px) calc(50% + ${tiltY * 1.5}px)`;
